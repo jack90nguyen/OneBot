@@ -7,13 +7,15 @@ Console.Title = title;
 Console.ForegroundColor = ConsoleColor.White;
 Console.WriteLine($"::::: {title} :::::\n");
 
-Helper.GetConfig(out string link, out int time, out int replay);
+var links = new List<string>();
+Helper.GetConfig(out links, out int time, out int replay);
 
-Console.WriteLine("Link: " + link);
 if(replay == 0)
   Console.WriteLine("Time: " + time + " hour\n");
 else
   Console.WriteLine("Replay: " + replay + " minutes\n");
+foreach (var link in links)
+  Console.WriteLine("Link: " + link);
 
 while (true)
 {
@@ -28,12 +30,15 @@ while (true)
     // Chạy theo mốc giờ
     if(DateTime.Now.Hour == time)
     {
-      Console.ForegroundColor = ConsoleColor.Yellow;
-      Console.WriteLine("CallAPI: " + link);
+      foreach (var link in links)
+      {
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("CallAPI: " + link);
 
-      var results = await Helper.CallAPI(link);
-      Console.ForegroundColor = ConsoleColor.Green;
-      Console.WriteLine("Results: " + results);
+        var results = await Helper.CallAPI(link);
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("Results: " + results);
+      }
     }
 
     await Helper.Waiting(60);
@@ -41,12 +46,15 @@ while (true)
   else
   {
     // Chạy lặp lại theo phút
-    Console.ForegroundColor = ConsoleColor.Yellow;
-    Console.WriteLine("CallAPI: " + link);
+    foreach (var link in links)
+    {
+      Console.ForegroundColor = ConsoleColor.Yellow;
+      Console.WriteLine("CallAPI: " + link);
 
-    var results = await Helper.CallAPI(link);
-    Console.ForegroundColor = ConsoleColor.Green;
-    Console.WriteLine("Results: " + results);
+      var results = await Helper.CallAPI(link);
+      Console.ForegroundColor = ConsoleColor.Green;
+      Console.WriteLine("Results: " + results);
+    }
 
     await Helper.Waiting(replay);
   }

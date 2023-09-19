@@ -1,3 +1,6 @@
-LINK: https://crmhaviland.com/api
 TIME: 11
-REPLAY: 15
+REPLAY: 1
+https://localhost:5001/bot/contractsell/reminder
+https://localhost:5001/bot/contractsell/expiry
+https://localhost:5001/bot/contractsell/checkin
+https://localhost:5001/bot/rooms/empty

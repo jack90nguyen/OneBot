@@ -3,19 +3,20 @@ namespace OneBot;
 
 public class Helper
 {
-  public static void GetConfig(out string link, out int time, out int replay)
+  public static void GetConfig(out List<string> links, out int time, out int replay)
   {
     time = 0;
     replay = 0;
-    link = string.Empty;
+    links = new();
 
     string path = AppDomain.CurrentDomain.BaseDirectory + "config.txt";
     if (File.Exists(path))
     {
       var data = File.ReadAllLines(path);
-      link = data[0].Replace("LINK: ", "");
-      time = Convert.ToInt32(data[1].Replace("TIME: ", ""));
-      replay = Convert.ToInt32(data[2].Replace("REPLAY: ", ""));
+      time = Convert.ToInt32(data[0].Replace("TIME: ", ""));
+      replay = Convert.ToInt32(data[1].Replace("REPLAY: ", ""));
+      for (int i = 2; i < data.Count(); i++)
+        links.Add(data[i]);
     }
   }
 
