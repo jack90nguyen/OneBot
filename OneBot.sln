@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBot", "OneBot.csproj", "{E6AC7C1A-0F7A-4933-8103-3085FB19E11D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E6AC7C1A-0F7A-4933-8103-3085FB19E11D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6AC7C1A-0F7A-4933-8103-3085FB19E11D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6AC7C1A-0F7A-4933-8103-3085FB19E11D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6AC7C1A-0F7A-4933-8103-3085FB19E11D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {36A098EF-165F-4B39-8C1F-F22D0EA589BF}
+	EndGlobalSection
+EndGlobal
