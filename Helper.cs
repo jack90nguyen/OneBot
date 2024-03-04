@@ -1,4 +1,6 @@
 
+using System.Net;
+
 namespace OneBot;
 
 public class Helper
@@ -23,10 +25,35 @@ public class Helper
   public static HttpClient http = new HttpClient();
   public static async Task<string> CallAPI(string link)
   {
-    var res = await http.GetAsync(link);
-    var result = await res.Content.ReadAsStringAsync();
-
-    return result;
+    try
+    {
+      var res = await http.GetAsync(link);
+      if(res.StatusCode == HttpStatusCode.OK)
+      {
+        Console.WriteLine("Status: " + res.StatusCode);
+        string result = await res.Content.ReadAsStringAsync();
+        if(!result.Contains("An error occurred while processing your request."))
+          return result;
+        else
+        {
+          TelegramBot($"{link}|Server Error: An error occurred while processing your request");
+          Console.ForegroundColor = ConsoleColor.Red;
+          return "Server Error"; 
+        }
+      }
+      else
+      {
+        TelegramBot($"{link}|Status Error: {res.StatusCode}");
+        Console.ForegroundColor = ConsoleColor.Red;
+        return "Server Error. Status: " + res.StatusCode;
+      }
+    }
+    catch (System.Exception ex)
+    {
+      TelegramBot($"{link}|API Error: {ex.Message}");
+      Console.ForegroundColor = ConsoleColor.Red;
+      return "API Error";
+    }
   }
 
   public static async Task Waiting(int minutes)
@@ -39,5 +66,31 @@ public class Helper
       Console.Write(".");
     }
     Console.WriteLine("\n");
+  }
+
+  private static readonly string _botId = "bot5195155040";
+  private static readonly string _botKey = "AAEBXhtC_Z0498EyE6eJmltvDfBYlQD1yzA";
+  private static readonly string _botChat = "-731595697";
+
+  public static void TelegramBot(string message)
+  {
+    message = message.Replace("|", "\n").Trim();
+    new Task(async () =>
+    {
+      var data = new Dictionary<string, string>
+      {
+        {"chat_id", _botChat},
+        {"text", $"{DateTime.Now.ToString("dd/MM, HH:mm:ss")}\n{message}"}
+      };
+
+      ServicePointManager.Expect100Continue = true;
+      ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+      var url = $"https://api.telegram.org/{_botId}:{_botKey}/sendMessage";
+      var client = new HttpClient();
+      var response = await client.PostAsync(url, new System.Net.Http.FormUrlEncodedContent(data));
+
+      var result = await response.Content.ReadAsStringAsync();
+    }).Start();
   }
 }

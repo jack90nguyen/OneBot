@@ -1,6 +1,3 @@
-TIME: 11
-REPLAY: 1
-https://localhost:5001/bot/contractsell/reminder
-https://localhost:5001/bot/contractsell/expiry
-https://localhost:5001/bot/contractsell/checkin
-https://localhost:5001/bot/rooms/empty
+TIME: 0
+REPLAY: 5
+https://crmhaviland.com/bot/push-notify

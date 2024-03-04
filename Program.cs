@@ -7,8 +7,7 @@ Console.Title = title;
 Console.ForegroundColor = ConsoleColor.White;
 Console.WriteLine($"::::: {title} :::::\n");
 
-var links = new List<string>();
-Helper.GetConfig(out links, out int time, out int replay);
+Helper.GetConfig(out List<string> links, out int time, out int replay);
 
 if(replay == 0)
   Console.WriteLine("Time: " + time + " hour\n");
@@ -51,8 +50,8 @@ while (true)
       Console.ForegroundColor = ConsoleColor.Yellow;
       Console.WriteLine("CallAPI: " + link);
 
-      var results = await Helper.CallAPI(link);
       Console.ForegroundColor = ConsoleColor.Green;
+      var results = await Helper.CallAPI(link);
       Console.WriteLine("Results: " + results);
     }
 
