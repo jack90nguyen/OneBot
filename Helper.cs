@@ -22,11 +22,11 @@ public class Helper
     }
   }
 
-  public static HttpClient http = new HttpClient();
-  public static async Task<string> CallAPI(string link)
+  public static async Task<string> CallAPI(string link, int step = 0)
   {
     try
     {
+      var http = new HttpClient();
       var res = await http.GetAsync(link);
       if(res.StatusCode == HttpStatusCode.OK)
       {
@@ -50,9 +50,17 @@ public class Helper
     }
     catch (System.Exception ex)
     {
-      TelegramBot($"{link}|API Error: {ex.Message}");
-      Console.ForegroundColor = ConsoleColor.Red;
-      return "API Error";
+      if(step == 0)
+      {
+        await Task.Delay(TimeSpan.FromSeconds(10));
+        return await CallAPI(link, step + 1);
+      }
+      else
+      {
+        TelegramBot($"{link}|API Error: {ex.Message}");
+        Console.ForegroundColor = ConsoleColor.Red;
+        return "API Error";
+      }
     }
   }
 
